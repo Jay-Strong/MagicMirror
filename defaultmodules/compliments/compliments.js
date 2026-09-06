@@ -4,44 +4,103 @@ Module.register("compliments", {
 	// Module config defaults.
 	defaults: {
 		compliments: {
-			anytime: ["Hey there sexy!", "Butts"],
-			morning: ["Good morning, Ashley!", "Enjoy your day!", "Make good choices today!"],
-			afternoon: ["Hello, beauty!", "Good afternoon, Mrs. Strong!", "Looking good today!"],
-			evening: ["Wow, you look hot!", "You crushed it today!", "Good evening, Mrs. Strong!"],
-			"....-01-01": ["Happy new year!"],
-			"....-12-27": ["Happy Birthday, Ashley!"],
-			"....-12-25": ["Merry Christmas!"],
-			"....-10-31": ["Happy Halloween!", "BOO!", "Happy Anniversary you crazy kids!"],
-			"....-12-24": ["Santa's Coming!"],
-			clear: ["You're as clear and radiant as the sky!", "Perfect clarity in your beauty!"],
-			mainly_clear: ["Mostly clear skies suit you!", "You brighten a mostly beautiful day!"],
-			partly_cloudy: ["You shine through the clouds!", "Your beauty stands out!"],
-			overcast: ["You brighten even overcast days!", "Your light pierces through!"],
-			fog: ["Drive safe out there!", "Stay safe in the fog, beautiful!"],
-			depositing_rime_fog: ["You're beautiful even in the frost!", "Stay safe in that fog!"],
-			drizzle_light_intensity: ["Just a light drizzle won't dampen your spirit!", "You're perfect in any weather!"],
-			drizzle_moderate_intensity: ["You're lovely even in the drizzle!", "Nothing can dim your shine!"],
-			drizzle_dense_intensity: ["You're stunning in any weather!", "Rain can't dampen your glow!"],
-			freezing_drizzle_light_intensity: ["Stay warm and safe!", "You're beautiful in any condition!"],
-			freezing_drizzle_dense_intensity: ["Bundle up, gorgeous!", "You're worth staying warm for!"],
-			rain_slight_intensity: ["Don't forget your umbrella!", "Keep that smile dry!"],
-			rain_moderate_intensity: ["The rain is perfect for staying cozy!", "You're perfect rain or shine!"],
-			rain_heavy_intensity: ["Stay safe, you're too good to lose!", "Weather the storm with grace!"],
-			freezing_rain_light_intensity: ["Stay safe in that weather!", "You're gorgeous in any condition!"],
-			freezing_rain_heavy_intensity: ["You shine through the rain and snow!", "Beauty doesn't freeze!"],
-			snow_fall_slight_intensity: ["Bundle up, you look amazing!", "Snow day style is your style!"],
-			snow_fall_moderate_intensity: ["You're beautiful in the snow!", "Winter winds can't cool you down!"],
-			snow_fall_heavy_intensity: ["You're absolutely radiant!", "Winter can't dim your glow!"],
-			snow_grains: ["You're stunning even in snow!", "Your beauty is timeless!"],
-			rain_showers_slight: ["Just a little rain won't stop you!", "You're amazing in any weather!"],
-			rain_showers_moderate: ["Stay cozy in the rain!", "You're perfect in showers!"],
-			rain_showers_violent: ["Stay safe, you're amazing!", "Your strength is inspiring!"],
-			snow_showers_slight: ["A little snow never hurt anyone!", "You're gorgeous in white!"],
-			snow_showers_heavy: ["You're a force of nature!", "Keep being amazing, you whirlwind!"],
-			thunderstorm: ["You're electric tonight!", "You light up even the darkest storms!"],
-			thunderstorm_slight_hail: ["Stay safe in this wild weather!", "You're amazing in any condition!"],
-			thunderstorm_heavy_hail: ["You're a force of nature!", "Keep being amazing, you're unstoppable!"]
+			// NOTE ON THE WEATHER KEYS BELOW — they are not the names you would guess.
+			// The weather module broadcasts CURRENTWEATHER_TYPE using the provider's
+			// *icon* name, not the WMO condition name. openmeteo.js maps a weather code
+			// to a condition ("partly-cloudy") and then immediately converts that to an
+			// icon ("day-cloudy"); only the icon leaves the function. weather.js then
+			// runs .replace("-", "_"), which converts only the FIRST hyphen.
+			// So the broadcast key is "day_rain-mix" — not "day_rain_mix", and not the
+			// condition name "snow-showers-slight". A key that doesn't match exactly
+			// never fires. Day/night variants are separate keys.
+			// See defaultmodules/weather/providers/openmeteo.js #convertWeatherType.
+			anytime: [
+				"Hey there sexy! 😘",
+				"Butts 🍑",
+				"Obi and Diesel have been good. Mostly. 🐕",
+				"Edgar knocked something off a shelf. He regrets nothing. 😼",
+				"Kitten is not a kitten anymore. Kitten does not care. 🐈",
+				"Four animals and one Ben. You're outnumbered and winning. 🏆",
+				"Nobody has been fed. They are all lying to you. 🍽️",
+				"Zombie plan: Obi charges, Diesel hides, the cats defect. 🧟",
+				"In the apocalypse, Edgar sells you out for a snack. 🧟",
+				"The dogs would not protect you. Sorry. 🐶",
+				"Ben keeps the lights on. You keep everyone alive. Nice team. 💡",
+				"Jay is awesome 😎",
+				"Levi's got opinions today. 👶",
+				"Not long now, Ashley. 🤰"
+			],
+			morning: [
+				"Good morning, Ashley! ☀️",
+				"Make good choices today! 👍",
+				"Obi's been at the door since five. Diesel is still in bed. 🐕",
+				"Coffee first. Then the zoo. ☕",
+				"Edgar slept on Ben's head again. 😹",
+				"Everyone is starving. Allegedly. 🍽️",
+				"Long shift ahead. McLaren's lucky to have you. 🩺",
+				"Twelve hours on your feet, and you'll still be nice to everyone. 💪"
+			],
+			afternoon: [
+				"Hello, beauty! 😍",
+				"Good afternoon, Mrs. Strong! 👋",
+				"Edgar found the sunny spot. He's not moving. 🐈",
+				"Nap like a cat. You've earned it. 😴",
+				"Somewhere in Lapeer, a patient thinks you hung the moon. 🌙",
+				"Growing a whole person and still looking like that. 🤰",
+				"Whatever Kitten did, it wasn't Kitten. 😼"
+			],
+			evening: [
+				"Wow, you look hot! 🔥",
+				"You crushed it today! 💪",
+				"Good evening, Mrs. Strong! 🌆",
+				"Feet up. Ben's got the dogs. 🐕",
+				"Obi's asleep on the good couch again. 🛋️",
+				"Edgar and Kitten have claimed the bed. It's over. 🐈",
+				"Ben says he'll do it tomorrow. Ben will not. 🙄",
+				"Shift's done. The dogs missed you. Loudly. 🐕",
+				"Twelve hours on your feet, growing a person. Sit down. 🤰",
+				"The nursery's almost done. Almost. 🍼"
+			],
 
+			// Single-day entries only. specialDayUnique is true, so a date match clears
+			// every other compliment for that whole day — never use a month-wide pattern.
+			"....-01-01": ["New year. Same zoo. 🎉", "Here we go again. 🥂"],
+			"....-02-10": ["Happy Birthday, Ben! 🎂", "Another year of Ben. Congratulations, everyone. 🎉"],
+			"....-09-22": ["Fall's officially here. 🍂", "Sweater weather. Your season. 🍁"],
+			"....-10-01": ["It's October. You know what that means. 🎃", "Spooky season, engaged. 👻"],
+			"....-10-31": ["Happy Halloween! 🎃", "BOO! 👻", "Happy Anniversary you crazy kids! 💍", "Married on Halloween. Obviously. 🦇", "Another year undead together. 🧟", "Till death. And then a bit longer. 💀"],
+			"....-11-01": ["Halloween's over. 364 days to go. 🎃"],
+			"....-12-24": ["Santa's Coming! 🎅", "Ben's still wrapping. Don't look. 🎁"],
+			"....-12-25": ["Merry Christmas! 🎄"],
+			"....-12-27": ["Happy Birthday, Ashley! 🎂"],
+			// Placeholder for "end of November" — correct once the real date is known.
+			"2026-11-30": ["Today's the day. Maybe. 👶", "Any minute now, Levi. 🍼"],
+
+			day_sunny: ["Perfect day to wear both dogs out. 🐕", "Sun's out. Edgar already called the window. 🐈", "Clear skies. Even Diesel will go outside. ☀️"],
+			night_clear: ["Clear night. Worth stepping outside for a minute. ✨", "Stars are out. So is Kitten, probably. 🌙"],
+			day_cloudy: ["Mild and grey. Obi's favorite. Diesel says it's fine. ⛅", "Nothing dramatic out there. Enjoy it. 🌤️", "Good day for the good chair. 🛋️"],
+			"night_alt-cloudy": ["Quiet cloudy night. Perfect for doing nothing. ☁️", "Everyone's asleep. Even Kitten. 😴"],
+			"day_sunny-overcast": ["Grey and cool. Peak fall energy. 🍂", "Overcast and calm. The cats approve. 🐈"],
+			"night_alt-partly-cloudy": ["Soft night out there. Sleep in. 🌥️", "Nothing happening outside. Good. 😴"],
+			day_fog: ["Foggy out. Tell Ben to take it slow. 🌫️", "Can't see a thing. Leave early. 🌫️", "Perfect zombie weather. Obi's ready. Diesel is not. 🧟"],
+			night_fog: ["Fog's rolling in. Careful on the roads tonight. 🌫️", "Zero visibility. This is how every zombie movie starts. 🧟"],
+			day_sprinkle: ["Light rain. Diesel will refuse. Obi won't care. 🐕", "Drizzle out. Umbrella's by the door. ☂️", "Not enough rain to get Ben out of work. Sorry, Ben. 🌦️"],
+			night_sprinkle: ["Drizzling out. Good sleeping weather. 🌧️", "Rain on the roof. Perfect. 😴"],
+			day_showers: ["Proper rain. Towel by the back door. 🧻", "Wet dog day. Obi's joy, your towels. 🐕", "Raining like this, Ben might get sent home. 🌧️"],
+			night_showers: ["Rain all night. Sleep hard. 🌧️", "Nothing to do but stay in. Shame. 🛋️"],
+			day_thunderstorm: ["Storm's here. Diesel's under the bed. Ben's on the couch. 🐕", "Thunder out. Obi's watching the window like it's a movie. 🍿", "Storm like this, Ben's day is cancelled. ⛈️", "Big storm. Go find Diesel. 🐕"],
+			night_thunderstorm: ["Storm tonight. Expect company in the bed. 🐕", "Thunder. Diesel will be between you by midnight. ⛈️", "If this holds till morning, Ben's not going in. ⚡"],
+			snowflake_cold: ["Freezing drizzle. Ice on everything. Ben's home. Enjoy him. 🧊", "Ice out there. Even Obi's unsure about this one. 🥶"],
+			"day_rain-mix": ["Sloppy mix out. Nobody's working in this. Ben included. 🌨️", "Worst of both. Diesel votes no. 🐕"],
+			"night_rain-mix": ["Icy mix tonight. Good odds Ben's home tomorrow. 🧊", "Messy out. Stay off the roads. 🚗"],
+			"day_snow-wind": ["Snow's falling. Obi's thrilled. Diesel is not. Ben's hopeful. ❄️", "First tracks in the yard are always Obi's. 🐾", "Snow day. The cats won't even look at it. 🐈"],
+			"night_snow-wind": ["Snowing all night. Ben's quietly hoping it keeps up. ❄️", "Quiet snow. Best kind of night. 🌨️"],
+			"day_snow-thunderstorm": ["Heavy snow. Nobody's working today. Ben included. ❄️"],
+			"night_snow-thunderstorm": ["Serious snow tonight. That's a snow day and everyone knows it. ❄️", "Big snow coming down. Blankets and dogs. 🛋️"],
+			day_sleet: ["Sleet. Miserable out. Diesel agrees. 🐕", "Ice pellets. Nobody's climbing anything today. 🧊"],
+			night_sleet: ["Sleeting. Ben's odds of a day off are climbing. 🧊", "Nasty out. Glad you're in. 🥶"],
+			"day_sleet-storm": ["Hail. Actual hail. Get the cars in. 🚗", "Wild out there. Everyone inside? Count the animals. 🐾"],
+			"night_sleet-storm": ["Hailstorm tonight. Check on the cars. 🚗", "This one's a mess. Ben's not going in tomorrow. ⛈️", "Even Obi's staying in. 🐕"]
 		},
 		updateInterval: 10000,
 		remoteFile: null,
