@@ -15,7 +15,7 @@ exports.startApplication = async (configFilename, systemDate = null, electronPar
 
 	// check environment for DISPLAY or WAYLAND_DISPLAY
 	if (process.env.WAYLAND_DISPLAY) {
-		electronParams.unshift("js/electron.js", "--enable-features=UseOzonePlatform", "--ozone-platform=wayland");
+		electronParams.unshift("js/electron.js", "--ozone-platform=wayland");
 	} else {
 		electronParams.unshift("js/electron.js");
 	}
@@ -70,7 +70,7 @@ exports.stopApplication = async (timeout = 10000) => {
 			if (electronProcess && !electronProcess.killed) {
 				electronProcess.kill("SIGKILL");
 			}
-		} catch (error) {
+		} catch {
 			// Ignore errors caused by Playwright already tearing down the connection
 		}
 	};
@@ -80,7 +80,7 @@ exports.stopApplication = async (timeout = 10000) => {
 			app.close(),
 			new Promise((_, reject) => setTimeout(() => reject(new Error("Electron close timeout")), timeout))
 		]);
-	} catch (error) {
+	} catch {
 		killElectron();
 	}
 };

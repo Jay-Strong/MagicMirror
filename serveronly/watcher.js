@@ -1,11 +1,11 @@
 // Load lightweight internal alias resolver to enable require("logger")
 require("../js/alias-resolver");
 
-const { spawn } = require("child_process");
-const fs = require("fs");
-const path = require("path");
-const net = require("net");
-const http = require("http");
+const { spawn } = require("node:child_process");
+const fs = require("node:fs");
+const path = require("node:path");
+const net = require("node:net");
+const http = require("node:http");
 const Log = require("logger");
 const { getConfigFilePath } = require("#server_functions");
 
@@ -35,7 +35,7 @@ function getServerConfig () {
 			port: global.mmPort || config.port || 8080,
 			address: config.address || "localhost"
 		};
-	} catch (err) {
+	} catch {
 		serverConfig = { port: 8080, address: "localhost" };
 	}
 
@@ -145,10 +145,10 @@ function notifyClientsToReload () {
  * Restart the server process
  * @param {string} reason The reason for the restart
  */
-async function restartServer (reason) {
+function restartServer (reason) {
 	if (restartTimer) clearTimeout(restartTimer);
 
-	restartTimer = setTimeout(async () => {
+	restartTimer = setTimeout(() => {
 		Log.info(reason);
 
 		if (child) {
@@ -248,7 +248,7 @@ try {
 			Log.warn(`Watch target is not a file (directories not supported): ${targetPath}`);
 		}
 	}
-} catch (err) {
+} catch {
 	// Config file might not exist or be invalid, use fallback targets
 	Log.warn("Could not load watchTargets from config.");
 }
