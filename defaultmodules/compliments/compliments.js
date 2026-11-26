@@ -82,6 +82,7 @@ Module.register("compliments", {
 			"....-10-01": ["It's October. You know what that means. 🎃", "Spooky season, engaged. 👻"],
 			"....-10-31": ["Happy Halloween! 🎃", "BOO! 👻", "Happy Anniversary you crazy kids! 💍", "Married on Halloween. Obviously. 🦇", "Another year undead together. 🧟", "Till death. And then a bit longer. 💀"],
 			"....-11-01": ["Halloween's over. 364 days to go. 🎃"],
+			"....-11-25": ["Happy Birthday, Levi! 🎂", "Levi Michael turns another year older. The dogs are thrilled. 🐕", "Happy Birthday, little man! 💙"],
 			"....-12-24": ["Santa's Coming! 🎅", "Ben's still wrapping. Don't look. 🎁"],
 			"....-12-25": ["Merry Christmas! 🎄"],
 			"....-12-27": ["Happy Birthday, Ashley! 🎂"],
