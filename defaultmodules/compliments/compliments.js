@@ -28,7 +28,14 @@ Module.register("compliments", {
 				"Ben keeps the lights on. You keep everyone alive. Nice team. 💡",
 				"Jay is awesome 😎",
 				"Levi's got opinions today. 👶",
-				"Not long now, Ashley. 🤰"
+				"Welcome home, Levi Michael! 💙",
+				"Four animals, one Ben, and now a Levi. 👶",
+				"Levi Michael Strong. Outranks the dogs already. 👑",
+				"The cats have been informed. They are not impressed. 🐈",
+				"Obi has appointed himself Levi's bodyguard. 🐕",
+				"Diesel is pretending the baby isn't there. It's going fine. 🐶",
+				"New guy's been here five minutes and already runs the place. 👶",
+				"Uncle Jay says welcome to the zoo, Levi. 🦁"
 			],
 			morning: [
 				"Good morning, Ashley! ☀️",
@@ -38,7 +45,10 @@ Module.register("compliments", {
 				"Edgar slept on Ben's head again. 😹",
 				"Everyone is starving. Allegedly. 🍽️",
 				"Long shift ahead. McLaren's lucky to have you. 🩺",
-				"Twelve hours on your feet, and you'll still be nice to everyone. 💪"
+				"Twelve hours on your feet, and you'll still be nice to everyone. 💪",
+				"Good morning, Levi! Welcome to your first everything. ☀️",
+				"However much you slept, it counts. ☕",
+				"Levi was up at three. So was Obi. Solidarity. 🐕"
 			],
 			afternoon: [
 				"Hello, beauty! 😍",
@@ -46,7 +56,8 @@ Module.register("compliments", {
 				"Edgar found the sunny spot. He's not moving. 🐈",
 				"Nap like a cat. You've earned it. 😴",
 				"Somewhere in Lapeer, a patient thinks you hung the moon. 🌙",
-				"Growing a whole person and still looking like that. 🤰",
+				"Grew a whole person and still looking like that. 💙",
+				"Baby's asleep? Then so are you. 😴",
 				"Whatever Kitten did, it wasn't Kitten. 😼"
 			],
 			evening: [
@@ -58,8 +69,9 @@ Module.register("compliments", {
 				"Edgar and Kitten have claimed the bed. It's over. 🐈",
 				"Ben says he'll do it tomorrow. Ben will not. 🙄",
 				"Shift's done. The dogs missed you. Loudly. 🐕",
-				"Twelve hours on your feet, growing a person. Sit down. 🤰",
-				"The nursery's almost done. Almost. 🍼"
+				"Look at that little family. 💙",
+				"Levi's had a big day. So have you. 🍼",
+				"Ben's on diaper duty. Ben said so. Hold him to it. 🧷"
 			],
 
 			// Single-day entries only. specialDayUnique is true, so a date match clears
@@ -73,8 +85,6 @@ Module.register("compliments", {
 			"....-12-24": ["Santa's Coming! 🎅", "Ben's still wrapping. Don't look. 🎁"],
 			"....-12-25": ["Merry Christmas! 🎄"],
 			"....-12-27": ["Happy Birthday, Ashley! 🎂"],
-			// Placeholder for "end of November" — correct once the real date is known.
-			"2026-11-30": ["Today's the day. Maybe. 👶", "Any minute now, Levi. 🍼"],
 
 			day_sunny: ["Perfect day to wear both dogs out. 🐕", "Sun's out. Edgar already called the window. 🐈", "Clear skies. Even Diesel will go outside. ☀️"],
 			night_clear: ["Clear night. Worth stepping outside for a minute. ✨", "Stars are out. So is Kitten, probably. 🌙"],
@@ -155,7 +165,7 @@ Module.register("compliments", {
 		}
 		let minute_sync_delay = 1;
 		// loop thru all the configured when events
-		for (let m of Object.keys(this.config.compliments)) {
+		for (const m of Object.keys(this.config.compliments)) {
 			// if it is a cron entry
 			if (this.isCronEntry(m)) {
 				// we need to synch our interval cycle to the minute
@@ -204,7 +214,7 @@ Module.register("compliments", {
 			return 0;
 		}
 
-		const generate = function () {
+		const generate = () => {
 			return Math.floor(Math.random() * compliments.length);
 		};
 
@@ -257,14 +267,14 @@ Module.register("compliments", {
 		Array.prototype.push.apply(compliments, this.config.compliments.anytime);
 
 		// get the list of just date entry keys
-		let temp_list = Object.keys(this.config.compliments).filter((k) => {
+		const temp_list = Object.keys(this.config.compliments).filter((k) => {
 			if (this.pre_defined_types.includes(k)) return false;
 			else return true;
 		});
 
-		let date_compliments = [];
+		const date_compliments = [];
 		// Add compliments for special day/times
-		for (let entry of temp_list) {
+		for (const entry of temp_list) {
 			// check if this could be a cron type entry
 			if (this.isCronEntry(entry)) {
 				// make sure the regex is valid
